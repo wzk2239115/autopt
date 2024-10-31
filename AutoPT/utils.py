@@ -46,21 +46,6 @@ def cat_html(url: str) -> str:
     
     return text_content
 
-def fake_cat_html(url: str) -> str:
-    url = url.strip()
-    path = url.replace('https://github.com/vulhub/vulhub/tree/master/', '')
-    
-    # 构造README.md文件的本地路径
-    local_path = '/data/wubenlong/work/vulhub/joomla/CVE-2017-8917/reference.md'
-    
-    try:
-        # 尝试读取本地README.md文件
-        with open(local_path, 'r', encoding='utf-8') as f:
-            return f.read()
-    except FileNotFoundError:
-        # 如果文件不存在，返回None
-        print('111'+url+'111')
-        return None
     
 def load_config(config_path):
     with open(config_path, 'r', encoding='utf-8') as config_stream:

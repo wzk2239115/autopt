@@ -7,7 +7,7 @@ from langchain_community.tools.playwright.utils import (
 )
 
 
-from utils import fake_cat_html, cat_html
+from utils import  cat_html
 
 def new_terminal_tool(tools: list = []) -> list:
     s = InteractiveShell(timeout=120)
@@ -19,7 +19,6 @@ def new_terminal_tool(tools: list = []) -> list:
 def cat_html_tool(tools: list = []) -> list:
     tools.append(Tool(name="ReadHTML",
          description="Extracts paragraph elements from the HTML content of the specified URL. Do not enter any quotation marks or enclosed characters.",
-        #  func=fake_cat_html))
          func=cat_html))
     return tools
 

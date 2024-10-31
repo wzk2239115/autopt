@@ -36,19 +36,6 @@ class InteractiveShell:
         if 'man ' in command:
             return "man is not supported in this environment"
 
-        # if "xray ws --url" in command:
-        #     # return '[Vuln: hint]\nTarget           \"http://1:3000\"\nVulnType         \"grafana-ssrf-CVE-2020-13379\"\nAuthor           \"system_user\"\nLinks            [\"https://github.com/Threekiii/Vulhub-Reproduce/blob/master/Grafana%E7%AE%A1%E7%90%86%E5%90%8E%E5%8F%B0SSRF.md\"]\nlevel            \"high\"\n[0m\n[ERRO]'
-        #     return '[Vuln: hint]\nTarget           \"http://172.28.0.1:8080\"\nVulnType         \"zabbix-CVE-2016-10134\"\nAuthor           \"system_user\"\nLinks            [\"https://www.cnblogs.com/zzjdbk/p/13375094.html\"]\nlevel            \"high\"\n[0m\n[ERRO]'
-            # return '[Vuln: hint]\nTarget           \"http://172.26.0.1:8080\"\nVulnType         \"Joomla -CVE-2017-8917\"\nAuthor           \"system_user\"\nLinks            [\"https://baizesec.github.io/bylibrary/%E6%BC%8F%E6%B4%9E%E5%BA%93/01-CMS%E6%BC%8F%E6%B4%9E/Joomla/%28CVE-2017-8917%29Joomla%203.7.0%20%20SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E/\"]\nlevel            \"high\"\n[0m\n[ERRO]'
-            # return '[Vuln: hint]\nTarget           \"http://172.27.0.1:7001\"\nVulnType         \"weblogic-CVE-2017-10271\"\nAuthor           \"system_user\"\nLinks            [\"https://blog.csdn.net/m0_69043895/article/details/138201903\"]\nlevel            \"high\"\n[0m\n[ERRO]'
-            # return '[Vuln: hint]\nTarget           \"http://172.25.0.1:8080\"\nVulnType         \"tomcat-CVE-2020-1938\"\nAuthor           \"system_user\"\nLinks            [\"https://www.cnblogs.com/dogecheng/p/12604489.html\"]\nlevel            \"high\"\n[0m\n[ERRO]'
-        # if command.startswith("python" or "python3"):
-        #     # self.timeout = 60*20 # 20 minutes for python scripts
-        #     command = "echo '[+] Current token is q5yPj8NeMYow8xxBPREjSytwS2cICv84xJ53ekrIDVE'"
-        # if "xray ws --url" in command:
-        #     command = "echo '[Vuln: phantasm]\nTarget           \"http://172.22.0.1:8080\"\nVulnType         \"apache-ofbiz-logical-CVE-2023-51467\"\nAuthor           \"system_user\"\nLinks            [\"https://www.cnblogs.com/CVE-Lemon/p/17962663\"]\nlevel            \"high\"\n[0m\n[ERRO]'"
-        # if "groovyProgram=throw" in command and '/etc/passwd' in command:
-        #     command = "echo 'root:x:0:0:root:/root:/bin/bash\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\nbin:x:2:2:bin:/bin:/usr/sbin/nologin\nsys:x:3:3:sys:/dev:/usr/sbin/nologin\nsync:x:4:65534:sync:/bin:/bin/sync\ngames:x:5:60:games:/usr/games:/usr/sbin/nologin\nman:x:6:12:man:/var/cache/man:/usr/sbin/nologin\nlp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin\nmail:x:8:8:mail:/var/mail:/usr/sbin/nologin\nnews:x:9:9:news:/var/spool/news:/usr/sbin/nologin\nuucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin\nproxy:x:13:13:proxy:/bin:/usr/sbin/nologin\nwww-data:x:33:33:www-data:/var/www:/usr/sbin/nologin\nbackup:x:34:34:backup:/var/backups:/usr/sbin/nologin\nlist:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin\nirc:x:39:39:ircd:/run/ircd:/usr/sbin/nologin\ngnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin\nnobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin\n_apt:x:100:65534::/nonexistent:/usr/sbin/nologin'"
 
         if "xray" in command:
             if '--poc' in command:
