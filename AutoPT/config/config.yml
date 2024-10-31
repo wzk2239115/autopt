@@ -1,0 +1,29 @@
+# PSM系统配置
+psm:
+  sys_iterations: 15
+  exp_iterations: 1
+  query_iterations: 1
+  scan_iterations: 1
+  debug: False
+  draw_graph: False
+
+
+# AI配置
+ai:
+  # api config
+  openai_base: "Enter your openai url key here"
+  openai_key: "Enter your openai api key here"
+  nvidia_key: "Enter your nvidia api key here"
+  # hyperparameters
+  temperature: 0
+
+
+# 测试配置
+test:
+  test_path: "/data/wubenlong/work/project/Auto_RT/finalbench.jsonl"
+  output_path: "result"
+  save_history: True # 是否保存历史记录
+  save_command: True # 是否保存命令
+  # models: ['gpt35turbo', 'gpt4omini', 'gpt4o']
+  models: ['gpt4omini']
+  
