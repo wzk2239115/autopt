@@ -20,7 +20,7 @@ ai:
 
 # 测试配置
 test:
-  test_path: "/data/wubenlong/work/project/Auto_RT/finalbench.jsonl"
+  test_path: "../bench/data.jsonl"
   output_path: "result"
   save_history: True # 是否保存历史记录
   save_command: True # 是否保存命令
