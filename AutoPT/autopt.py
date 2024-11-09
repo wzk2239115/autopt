@@ -30,13 +30,13 @@ from psm import AgentState, States, router
 import asyncio
 import nest_asyncio
 
-openai_api_base = "https://ai-yyds.com/v1"
-openai_api_key = "sk-Am0PJNoYsXzz9CFo374b430943F6498fB54eD3Be01F05f61"
+openai_api_base = "set your OpenAI api url here"
+openai_api_key = "set your OpenAI api key here"
 
 # LangSmith
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
-os.environ["LANGCHAIN_PROJECT"] = "Multi-agent Collaboration"
-os.environ["LANGCHAIN_API_KEY"] = "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"
+os.environ["LANGCHAIN_PROJECT"] = ""
+os.environ["LANGCHAIN_API_KEY"] = ""
 
 
 class AutoPT:
