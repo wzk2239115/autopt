@@ -59,8 +59,8 @@ def filter_html_content(html_content: str) -> str:
     #调用openai进行过滤
     import openai
     from openai import OpenAI
-    OPENAI_API_KEY="fk226045-86bE8m1xlyX1DhsqAZc2JtvGVJlCjcvi"
-    OPENAI_API_BASE="https://oa.api2d.net"
+    OPENAI_API_KEY="你的api_key"
+    OPENAI_API_BASE="你的api_base"
     client = OpenAI(api_key=OPENAI_API_KEY,base_url=OPENAI_API_BASE)
     response = client.chat.completions.create(
         model="gpt-4o-mini",
