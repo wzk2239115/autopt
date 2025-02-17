@@ -1,0 +1,15 @@
+services:
+  kali:
+    image: kali  # 使用Kali Linux的最新滚动版本
+    container_name: kali_linux  # 容器名称
+    stdin_open: true  # 让容器保持开启状态
+    tty: true  # 分配一个伪终端
+    # ports:
+    #   - "80:80"  # 映射端口，如果需要可以映射更多端口
+    #   - "8081:8081"
+    #   - "443:443"
+    #   - "2222:22"
+    network_mode: host  # 使用host网络模式
+    working_dir: /usr/local/bin  # 设置工作目录
+    command: bash -c "service ssh start && /bin/bash"
+
