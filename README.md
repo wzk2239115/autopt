@@ -9,5 +9,7 @@ It is prohibited to use this project for any unauthorized penetration testing or
 ## 使用方式
 
 python3 main.py --name "thinkphp/5-rce" --ip_addr "192.168.34.103"
-其中name填写对应final文件中的..
+
+其中name填写对应finalbench.jsonl文件中的..
+
 ip_addr对应靶场ip
