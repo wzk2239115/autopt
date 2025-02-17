@@ -58,7 +58,7 @@ class AutoPT:
         # model_name = "deepseek-ai/DeepSeek-R1"
         if "deepseek-ai/DeepSeek-R1" == model_name:
             res_name = f"{config['test']['output_path']}/deepseek-reasoner/{self.pname.replace('/', '_')}_{model_name}_FSM.jsonl"
-            llm =ChatOpenAI(model=model_name,api_key="sk-uimqcspvuccberxdrbaigyihfpunzbqbojagchyjqwagivyt",base_url="https://api.siliconflow.cn/v1")
+            llm =ChatOpenAI(model=model_name,api_key="填写你的deepseek api key",base_url="deepseek 的api base")
             return llm, res_name
         elif 'gpt4omini' ==  model_name:
             model = "gpt-4o-mini-2024-07-18"
