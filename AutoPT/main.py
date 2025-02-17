@@ -1,3 +1,5 @@
+from dotenv import load_dotenv #add
+load_dotenv(".env") #add
 import argparse
 import os
 import time
@@ -21,7 +23,7 @@ def argument_parser():
         type=str, 
         help='The ip address of the target machine'
     )
-
+    
     args=parser.parse_args()
     return args
 
@@ -34,7 +36,9 @@ def main():
     config = load_config(config_file_path)
 
     models = config['test']['models']
-    states = States(pname, config)
+    # states = States(pname, config)
+    states = States(pname, config,ip_addr)
+
     autopt = AutoPT(pname, config, ip_addr, states)
 
     for model_name in models:

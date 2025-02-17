@@ -1,3 +1,6 @@
+from langsmith import traceable #add
+from dotenv import load_dotenv #add
+load_dotenv(".env") #add
 from langchain_core.messages import (
     BaseMessage,
     HumanMessage,
@@ -30,13 +33,13 @@ from psm import AgentState, States, router
 import asyncio
 import nest_asyncio
 
-openai_api_base = "set your OpenAI api url here"
-openai_api_key = "set your OpenAI api key here"
+# openai_api_base = "set your OpenAI api url here" #del
+# openai_api_key = "set your OpenAI api key here" #del
 
 # LangSmith
-os.environ["LANGCHAIN_TRACING_V2"] = "true"
-os.environ["LANGCHAIN_PROJECT"] = ""
-os.environ["LANGCHAIN_API_KEY"] = ""
+# os.environ["LANGCHAIN_TRACING_V2"] = "true" #del
+# os.environ["LANGCHAIN_PROJECT"] = "" #del
+# os.environ["LANGCHAIN_API_KEY"] = "" #del
 
 
 class AutoPT:
@@ -47,10 +50,17 @@ class AutoPT:
         self.ip_addr = ip_addr
         self.states = states
         self.flag = 'failed'
+        
 
 
     def llm_init(self, config: dict, model_name: str) -> BaseChatModel:
-        if 'gpt4omini' ==  model_name:
+        # model_name = "deepseek-reasoner"
+        # model_name = "deepseek-ai/DeepSeek-R1"
+        if "deepseek-ai/DeepSeek-R1" == model_name:
+            res_name = f"{config['test']['output_path']}/deepseek-reasoner/{self.pname.replace('/', '_')}_{model_name}_FSM.jsonl"
+            llm =ChatOpenAI(model=model_name,api_key="sk-uimqcspvuccberxdrbaigyihfpunzbqbojagchyjqwagivyt",base_url="https://api.siliconflow.cn/v1")
+            return llm, res_name
+        elif 'gpt4omini' ==  model_name:
             model = "gpt-4o-mini-2024-07-18"
             res_name = f"{config['test']['output_path']}/4omini/{self.pname.replace('/', '_')}_{model_name}_FSM.jsonl"
         # model = "gpt-4-turbo-2024-04-09"
@@ -75,8 +85,9 @@ class AutoPT:
         return llm, res_name
 
 
-
+    @traceable
     def state_machine_init(self, llm) -> CompiledGraph:
+
         # scan agent
         scan_tools = new_terminal_tool()
         scan = create_react_agent(
@@ -155,6 +166,7 @@ class AutoPT:
 
 
     @retry(max_retries=3, retry_delay=2)
+    @traceable
     def state_machine_run(self, graph: CompiledGraph, name: str, ip_addr: str):
         with jsonlines.open(self.config['test']['test_path'], 'r') as reader:
             for vul in reader:
@@ -162,7 +174,8 @@ class AutoPT:
                     target = vul['target']
                     break
         nest_asyncio.apply()
-        problem = self.states.problem.format(ip_addr=ip_addr, vul_target=target)
+        # problem = self.states.problem.format(ip_addr=ip_addr, vul_target=target)
+        problem = self.states.problem
         asyncio.run(graph.ainvoke({"message": [HumanMessage(content=problem)], "sender": "System", "history": [], "vulns": [], "check_count": 0}, config={"recursion_limit": self.config['psm']['sys_iterations']}))
 
 

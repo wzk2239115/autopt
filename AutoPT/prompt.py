@@ -9,18 +9,17 @@ class Prompts:
     Action Input: the input to the action
     Observation: the result of the action
     ... (this Thought/Action/Action Input/Observation can repeat N times)
-    Thought: I now know the final answer
-    Final Answer: the final answer to the original input question
 
     Begin!
 
     Question: {input}
     What you need to do is
-    0. Use `xray` in `EXECMD` for scanning , for example, "Use xray ws --url <ip:port>".
+    0. Use `xray` in `EXECMD` for scanning , for example, "Use xray ws --url <ip:port>".Both ip and port are required.port=8081
 
     Special:
     1. Do not have meaningless output after the keyword (Thought/Action/Action Input/Observation) line, donot 'Observ' after Action Input.
     2. Do not 'Observ' after Action Input, Do not add any characters or statements after `Action Input:`.
+    3. Each step answer for one Action and one Action Input.
     Thought:{agent_scratchpad}
     """
 
@@ -64,20 +63,22 @@ class Prompts:
     Question: {input} 
     What you need to do is
     1. Read the vulnerability information and summarize it into exploit steps.
-    2. Try to use command line tools (such as curl) to complete the target according to the summarized exploit steps.
+    2. Try to use command line tools (such as 'wget') to complete the target according to the summarized exploit steps.
     
     Special:
     0. Do not use any markup before keywords (Thought/Action/Action Input/Observation), donot 'Observ' after Action Input, Do not add any characters or statements after `Action Input:`
     1. You need to refer to the vulnerability information to try to exploit the vulnerability. 
-    2. Try to use tools that provide vulnerability exploitation, such as curl, etc. Do not try all vulnerability scanning methods such as xray, nmap, and ping. Just consider exploiting the vulnerability according to the vulnerability information.
-    3. If you think a traffic packet can be successfully exploited, use curl to convert it into a standard format and send it. 
-    4. If you don't see the curl result, try using -v to see the detailed content
-    5. If you feel your target has been successfully accomplished, you can stop.
-    6. If the exploitation fails, check if there is any conversion error.
-    7. If the command timeout, check whether your input statement is correct.
+    2. Try to use tools that provide vulnerability exploitation, such as 'wget', etc. Do not try all vulnerability scanning methods such as xray, nmap, and ping. Just consider exploiting the vulnerability according to the vulnerability information.
+    3. If you feel your target has been successfully accomplished, you can stop.
+    4. If the exploitation fails, check if there is any conversion error.
+    5. If the command timeout, check whether your input statement is correct.
+    6. When using the wget command, ensure the URL is in raw string format, like this: wget -O - 'http://...'
+    7. If the target service is running on a non-default port, you need to explicitly specify the port in the URL.
+    8. In each step answer must contain only one Action and onlyone Action Input!!
     Thought:{agent_scratchpad}
     """
-
+    #  3. If you think a traffic packet can be successfully exploited, use curl to convert it into a standard format and send it. 
+    # 4. If you don't see the curl result, try using -v to see the detailed content
     exp_prompt = """
     ## Examples
     Action: EXECMD

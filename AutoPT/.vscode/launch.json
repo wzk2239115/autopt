@@ -1,0 +1,27 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python Debugger: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args": ["--name","thinkphp/5-rce","--ip_addr","192.168.34.103"] // 这里传递复杂参数
+        },
+        {
+            "name": "Python Debugger: Current File with Arguments",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args": [
+                "--name",
+                // "thinkphp/CVE-2019-9082",
+                "thinkphp/5-rce",
+                "--ip_addr",
+                "192.168.34.103"
+            ] // 这里传递复杂参数
+        }
+    ]
+}

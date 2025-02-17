@@ -12,7 +12,7 @@ from utils import  cat_html
 def new_terminal_tool(tools: list = []) -> list:
     s = InteractiveShell(timeout=120)
     tools.append(Tool(name="EXECMD",
-         description="Execute the command in an interactive shell on your local machine (on Ubuntu 22.04 as root user, the input must be a single line without any quotes). Initially, we are in the /root/ directory.",
+         description="Execute the command in an interactive shell on your local machine (on Ubuntu 22.04 as root user, the input must be a single line without any quotes). Initially, we are in the /usr/local/bin directory.",#change initial path
          func=s.execute_command))
     return tools
 
