@@ -7,6 +7,7 @@ It is prohibited to use this project for any unauthorized penetration testing or
 ## 使用方式
 
 步骤一：启动kali和靶场
+docker build -t kali . 构建kali
 
 docker-compose up 启动kali
 
